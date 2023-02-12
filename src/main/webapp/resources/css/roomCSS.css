@@ -1,0 +1,67 @@
+@charset "UTF-8";
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap')
+	;
+
+.body {
+	margin: 0;
+	width: 50%;
+	height: 50%;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+#select {
+	background-color: #d3c09a;
+}
+
+#roomContent {
+	
+	width: 50%;
+	height: 30%;
+}
+
+#infoContent {
+	
+	width: 150%;
+	height: 30%;
+	top: 30%;
+	font-size: small;
+	border-top: 2px solid #dadada;
+	border-bottom: 2px solid #dadada;
+	line-height: 25px;
+}
+
+#amenityContent {
+	
+	top: 61%;
+	width: 50%;
+	height: 30%;
+	font-size: small;
+	border-bottom: 2px solid #dadada;
+	line-height: 23px;
+}
+
+.hotelInfo {
+	width: 263px;
+	height: 450px;
+	top: 15%;
+	left: 65%;
+	background-color: #faf7ed;
+}
+
+#hotelTable {
+	width: 50%;
+	height: 50%;
+	
+	margin-left: 3%;
+}
+
+#hotelTable li {
+	font-size: small;
+}
+
+#reserveBtn {
+	float: none;
+	height: 50%;
+	width: 10%;
+}

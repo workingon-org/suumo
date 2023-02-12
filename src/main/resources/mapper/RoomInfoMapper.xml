@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinnotech.hotel.mapper.RoomInfoMapper">
+	<select id="getRoomIDByBookContent"  resultType="int">
+		SELECT id
+		FROM room_info
+		WHERE room_name LIKE '%${content}%'
+	</select>
+	<select id="getRoomInfoList"  resultType="com.sinnotech.hotel.dto.AdminRoomInfoDTO">
+		SELECT *
+		FROM room_info
+		where delete_flag = false
+		order by id desc
+	</select>
+	<select id="getRoomInfoDetail"  resultType="com.sinnotech.hotel.dto.AdminRoomInfoDTO">
+		SELECT *
+		FROM room_info
+		WHERE id = #{id}
+		AND delete_flag = false
+	</select>
+	<insert id="getRoomInfoInsert" parameterType="com.sinnotech.hotel.dto.AdminRoomInfoDTO">
+		INSERT INTO room_info (id, room_name, max_count, info, options, images, price, created_at, updated_at)
+		VALUES (
+			 (select id from room_info order by id desc limit 1)+1,
+			#{room_name}
+			, #{max_count}
+			, #{info}
+			, #{options}
+			, #{images}
+			, #{price}
+			, now() 
+			, now()
+		)
+	</insert>
+	<update id="getRoomInfoUpdate">
+		update
+			room_Info
+		set
+			room_name=#{room_name},
+			max_count=#{max_count},
+			info=#{info},
+			options=#{options},
+			images=#{images},
+			price=#{price},
+			created_at=now(),
+			updated_at=now()
+		where
+			id=#{id} and delete_flag=false 
+	</update>
+	<update id="getRoomInfoDelete">
+		UPDATE
+		room_info
+		SET
+		delete_flag = true
+		WHERE
+		id =
+		#{id}
+	</update>
+</mapper>

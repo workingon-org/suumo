@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	<mapper namespace="com.sinnotech.hotel.mapper.MemberMapper"> 
+	<!-- 유저정보 취득 -->
+ 	<select id="getMemberList" resultType="com.sinnotech.hotel.dto.UsersDTO">
+		SELECT
+			  EMAIL
+			, NAME
+			, PHONE
+			, PASSWORD
+			, ROLE
+		FROM
+			USERS
+	</select>
+	<!-- 회원가입 정보 입력  -->
+	<insert id="insertMember" parameterType="com.sinnotech.hotel.dto.UsersDTO">
+		INSERT INTO USERS (EMAIL, PASSWORD, ROLE, NAME, PHONE, CREATED_AT, UPDATED_AT)
+		VALUES (
+			#{email}
+			, #{password}
+			, 1
+			, #{name}
+			, #{phone}
+			, now() 
+			, now()
+		)
+	</insert>
+	<!-- 회원가입 정보 입력  -->
+	<insert id="insertNonMember" parameterType="com.sinnotech.hotel.dto.UsersDTO">
+		INSERT INTO USERS (EMAIL, PASSWORD, ROLE, TEMPORARY, NAME, PHONE, CREATED_AT, UPDATED_AT)
+		VALUES (
+			#{email}
+			, NULL
+			, 1
+			, false
+			, #{name}
+			, #{phone}
+			, now() 
+			, now()
+		)
+	</insert>
+	<!-- 이메일,전화번호 중복 체크 -->
+   <select id="overlappedEmail" parameterType="com.sinnotech.hotel.dto.UsersDTO" resultType="int">
+		SELECT 
+		      COUNT(email) 
+		           FROM USERS 
+				   WHERE email=#{email} 
+				        AND users.delete_flag = false
+	</select>
+   <select id="overlappedPhone" parameterType="com.sinnotech.hotel.dto.UsersDTO" resultType="int">
+		SELECT 
+		      COUNT(phone) 
+		           FROM USERS
+		           WHERE phone=#{phone} 
+		                AND users.delete_flag = false
+	</select>
+	<!-- 회원 및 비회원 정보 취득 -->
+	<select id="getLoginMemberInfo" resultType="com.sinnotech.hotel.dto.UsersDTO">
+		SELECT
+			  *
+		FROM users
+		WHERE email = #{email}
+              AND password = #{password}	
+              AND temporary = true
+              AND delete_flag = false
+	</select>
+	<select id="getLoginNonMemberInfo" resultType="com.sinnotech.hotel.dto.UsersDTO" >
+		SELECT
+			  *
+		FROM users
+		WHERE email = #{email}
+              AND phone = #{phone}	
+              AND users.temporary = false
+              AND users.delete_flag = false
+	</select>
+	<!-- 회원정보삭제 -->
+	<delete id="deleteMember" parameterType="int">
+		DELETE FROM USERS
+		WHERE EMAIL = #{email}
+	</delete>
+  </mapper>

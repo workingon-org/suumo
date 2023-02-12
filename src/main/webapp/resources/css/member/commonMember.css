@@ -1,0 +1,23 @@
+@charset "UTF-8";
+h1{
+ 	font-size: 1.7rem;
+ } 
+.form-group{
+	text-align: center;
+	margin: auto; 
+	padding: .3rem;
+	display: flex;
+	flex-direction: column;
+ }
+.card{
+  width: 55rem;
+  margin: auto;
+  }
+.card-header{
+  width: 55rem;
+  margin: auto;
+  }
+.btn-group{
+	width: 30rem;
+	justify-content: space-evenly;
+ }

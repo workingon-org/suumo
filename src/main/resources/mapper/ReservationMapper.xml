@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinnotech.hotel.mapper.ReservationMapper">
+	<resultMap id="reservationDTO" autoMapping="true" type="com.sinnotech.hotel.dto.ReservationDTO"/>
+	<select id="getReservationList"
+		resultType="com.sinnotech.hotel.dto.ReservationDTO">
+		SELECT * FROM TEST
+	</select>
+	<insert id="insertReservation">
+		INSERT 
+		INTO bookings( 
+		    user_id
+		    , room_id
+		    , price
+		    , pay_flag
+		    , cancel_flag
+		    , adult_cnt
+		    , children_cnt
+		    , start_dt
+		    , end_dt
+		    , options
+    		, delete_flag
+		    , created_at
+		    , updated_at
+		) 
+		values ( 
+		    1
+		    , 1
+		    , #{price}
+		    , True
+		    , True
+		    , #{adults}
+		    , #{kids}
+		    , #{checkin}
+		    , #{checkout}
+		    , 1
+		    , False
+		    , NOW()
+		    , NOW()
+		);
+	</insert>
+
+</mapper>

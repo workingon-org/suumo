@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sinnotech.hotel.mapper.BoardMapper">
+	<resultMap type="com.sinnotech.hotel.dto.BoardDTO"
+		id="boardDTO" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="createdAt" column="created_at" />
+	</resultMap>
+	<resultMap type="com.sinnotech.hotel.dto.CommentDTO"
+		id="commentDTO" autoMapping="true">
+		<id property="id" column="id" />
+		<result property="boardId" column="board_Id" />
+		<result property="name" column="name" />
+		<result property="content" column="content" />
+		<result property="deletFlag" column="delete_flag" />
+		<result property="createdAt" column="created_at" />
+		<result property="updatedAt" column="updated_at" />
+	</resultMap>
+	<select id="getBoardList" resultMap="boardDTO">
+		SELECT *
+		FROM BOARDS
+		WHERE
+		delete_flag = false
+		ORDER BY id DESC
+		LIMIT 20 OFFSET 0
+	</select>
+	<select id="getAllBoardCount" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		BOARDS
+		WHERE
+		delete_flag = false
+	</select>
+	<select id="searchBoardList" resultMap="boardDTO">
+		SELECT *
+		FROM BOARDS
+		WHERE
+		delete_flag = false
+		<if test="paging.title != ''">
+			<choose>
+				<when test="paging.title == 'title'">
+					AND title LIKE '%${paging.content}%'
+				</when>
+				<otherwise>
+					AND name LIKE '%${paging.content}%'
+					<!-- AND name = ${paging.content} -->
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY id DESC
+		LIMIT 20 OFFSET 20*(#{paging.currentPage} -1)
+	</select>
+	<select id="searchBoardListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		BOARDS
+		WHERE
+		delete_flag = false
+		<if test="paging.title != ''">
+			<choose>
+				<when test="paging.title == 'title'">
+					AND title LIKE '%${paging.content}%'
+				</when>
+				<otherwise>
+					AND name LIKE '%${paging.content}%'
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	<select id="boardDetail" resultMap="boardDTO">
+		SELECT *
+		FROM BOARDS
+		WHERE id =
+		#{id}
+	</select>
+	<insert id="insertBoard">
+		INSERT
+		INTO BOARDS(title, content, name, created_at,
+		updated_at)
+		VALUES (
+		#{title}
+		, #{content}
+		, #{name}
+		, NOW()
+		, NOW()
+		)
+	</insert>
+	<update id="updateBoard">
+		UPDATE BOARDS
+		SET
+		title = #{title}
+		, content =
+		#{content}
+		, updated_at = NOW()
+		WHERE
+		id = #{id}
+	</update>
+	<!-- <delete id="deleteBoard"> DELETE FROM BOARDS WHERE id = #{id} </delete> -->
+	<update id="deleteBoard">
+		UPDATE BOARDS
+		SET
+		delete_flag = true
+		WHERE
+		id = #{id}
+	</update>
+	<select id="selectCommentList" resultMap="commentDTO">
+		SELECT *
+		FROM COMMENTS
+		WHERE
+		board_id = #{boardId}
+		AND delete_flag = false
+		ORDER BY id DESC
+	</select>
+	<insert id="insertComment">
+		INSERT
+		INTO comments(board_id, name, content, created_at, updated_at)
+		VALUES (
+		#{boardId}
+		, #{name}
+		, #{content}
+		, NOW()
+		, NOW()
+		)
+	</insert>
+	<update id="updateComment">
+		UPDATE comments
+		SET
+		content = #{content}
+		WHERE
+		id = #{id}
+	</update>
+	<update id="commentDelete">
+		UPDATE comments
+		SET
+		delete_flag = true
+		WHERE
+		id = #{id}
+	</update>
+	<select id="checkCommentDeleteFlag" resultMap="commentDTO">
+		SELECT *
+		FROM COMMENTS
+		WHERE
+		id = #{id}
+		AND delete_flag = true
+	</select>
+	<select id="selectCommentById" resultMap="commentDTO">
+		SELECT *
+		FROM COMMENTS
+		WHERE
+		id = #{id}
+		AND delete_flag = false
+	</select>
+</mapper>

@@ -1,0 +1,82 @@
+@charset "UTF-8";
+/* @import "adminNotice.css"; */
+
+/*공용 CSS*/
+.notice_title {
+	color: #353535;
+	margin-bottom: 20px;
+}
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+text {
+	color: #353535;
+}
+
+input:focus {
+	outline: none !important;
+}
+
+textarea:focus {
+	outline: none !important;
+}
+
+.btn_style {
+	width: 60px;
+	height: 30px;
+	border: none;
+	color: #353535;
+	float: right;
+	margin-left: 5px;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.paging_btn_style {
+	width: 60px;
+	height: 30px;
+	border: none;
+	color: #353535;
+	margin-left: 5px;
+	font-size: 13px;
+	font-weight: bold;
+	background-color: #F3F3F3;
+}
+
+placeholder {
+	font: 13px;
+}
+
+a {
+	color: #353535;
+}
+
+a:hover {
+	color: #8C8C8C;
+}
+/*Write.jsp CSS*/
+
+/*Detail*/
+.readonly_input {
+	background-color: #EAEAEA;
+}
+/*list*/
+.th_style {
+	padding: 0px;
+}
+
+.td_style {
+	padding-left: 25px;
+	text-align: left;
+	height: 25px;
+}
+
+.title_tr {
+	font-size: 12px;
+	height: 30px;
+	border-bottom: 1px solid #eaeaea;
+}
+
+/**/
